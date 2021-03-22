@@ -21,6 +21,6 @@ jobs:
   job_3rd:
     runs-on: ubuntu-20.04
     needs: job_2nd
-    if: ${{ !failure() && !cancelled() }}
+    if: success()
     steps:
       - run: echo "3rd job!"

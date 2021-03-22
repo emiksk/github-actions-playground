@@ -10,7 +10,7 @@ jobs:
       - run: echo "1st job!"
       - name: Create tag
         run: |
-          TAG="$(date +%Y%m%d-%H%M)-$(git rev-parse --short=10 HEAD)"
+          TAG="$(date +%Y%m%d)"
           echo "::set-output name=tag::v${TAG}"
         id: create-tag
   job_2nd:

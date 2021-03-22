@@ -1,26 +1,26 @@
 name: dispatch
 on:
   workflow_dispatch:
+    inputs:
+      skip:
+        description: 'Will you skip the 1st job?'
+        required: true
+        default: 'no'
 jobs:
   job_1st:
     runs-on: ubuntu-20.04
-    outputs:
-      tag: ${{ steps.create-tag.outputs.tag }}
+    if: github.event.inputs.skip == 'no'
     steps:
       - run: echo "1st job!"
-      - name: Create tag
-        run: |
-          TAG="$(date +%Y%m%d)"
-          echo "::set-output name=tag::v${TAG}"
-        id: create-tag
   job_2nd:
     runs-on: ubuntu-20.04
     needs: job_1st
+    if: ${{ !failure() && !cancelled() }}
     steps:
       - run: echo "2nd job!"
-      - run: echo ${{ needs.job_1st.outputs.tag }}
   job_3rd:
     runs-on: ubuntu-20.04
     needs: job_2nd
+    if: ${{ !failure() && !cancelled() }}
     steps:
       - run: echo "3rd job!"

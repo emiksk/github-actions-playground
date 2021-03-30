@@ -9,7 +9,7 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-20.04
-    if: github.event.inputs.need-job1 == 'yes'
+    if: ${{ github.event.inputs.need-job1 == 'yes' }}
     outputs:
       tag: ${{ steps.create-tag.outputs.tag }}
     steps:
@@ -26,7 +26,7 @@ jobs:
     steps:
       - run: echo "2nd job!"
       - name: Echo tag
-        if: needs.job1.outputs.tag != ''
+        if: ${{ needs.job1.outputs.tag != '' }}
         run: echo ${{ needs.job1.outputs.tag }}
   job3:
     runs-on: ubuntu-20.04
